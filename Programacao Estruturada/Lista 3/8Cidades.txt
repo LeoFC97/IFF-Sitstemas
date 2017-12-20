@@ -1,0 +1,6 @@
+Campos 10
+Niteroi 20
+RioDeJaneiro 50
+Vitoria 30
+RioDeJaneiro 500
+Aaa 10

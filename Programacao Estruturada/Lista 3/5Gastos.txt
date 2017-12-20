@@ -1,0 +1,5 @@
+Cidade		Litros	Preco
+SaoJoaodaBarra 	40.00 	R$:40.00 
+Vitoria 	217.00 	R$:217.00 
+RiodeJaneiro 	372.00 	R$:372.00 
+Guarapari 	173.00 	R$:173.00 

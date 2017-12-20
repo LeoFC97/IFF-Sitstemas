@@ -1,0 +1,4 @@
+SaoJoaodaBarra  40
+Vitoria  217
+RiodeJaneiro  372
+Guarapari  173
