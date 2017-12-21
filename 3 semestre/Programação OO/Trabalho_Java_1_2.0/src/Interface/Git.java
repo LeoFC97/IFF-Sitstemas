@@ -16,7 +16,7 @@ public class Git extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jTextField1.setText("https://github.com/leonardofernandescosta/3-Semestre-Sistemas-de-Informa-o/tree/master/Trabalho_Java_1");
+        jTextField1.setText("https://github.com/leonardofernandescosta/IFF-Sitstemas/tree/master/Trabalho_Java_1_2.0");
         jTextField1.setEditable(false);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

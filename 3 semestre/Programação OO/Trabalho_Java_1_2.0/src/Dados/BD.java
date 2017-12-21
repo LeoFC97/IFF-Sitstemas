@@ -28,7 +28,7 @@ public class BD {
 			}
 			if(obj instanceof PessoaEvento) {
 				arq = new BufferedWriter(new FileWriter(path+"pessoa_evento.txt",true));
-				arq.write(((PessoaEvento)obj).getCPF()+"|"+((PessoaEvento)obj).getID()+"\n");
+				arq.write(((PessoaEvento)obj).getCPF()+"|"+((PessoaEvento)obj).getID()+"\r\n");
 				arq.close();
 			}
 		} catch(Exception e) {
@@ -51,7 +51,7 @@ public class BD {
 					String cp = tokens.nextToken();
 					String np = tokens.nextToken();
 					String ep = tokens.nextToken();
-					Pessoa p = new Pessoa(np, cp, ep);
+					Pessoa p = new Pessoa(cp, np, ep);
 					lista[cont1] = p;
 					cont1++;
 				}

@@ -116,7 +116,7 @@ public class Janela_Linkar extends JPanel
 						if((cpf.equals(varPessoaEvento.getCPF())) && (id.equals(varPessoaEvento.getID())))
 						{ 
 							k++;
-							JOptionPane.showMessageDialog(null, "O CPF já está cadastrado neste evento.");
+							JOptionPane.showMessageDialog(null, "O CPF jï¿½ estï¿½ cadastrado neste evento.");
 						}
 					}
 					if(k == 0)

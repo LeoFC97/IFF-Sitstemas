@@ -4,7 +4,7 @@ public class PessoaEvento
 {
 	public String id,cpf;
 
-	public PessoaEvento(String iD, String cpF)
+	public PessoaEvento(String cpF, String iD)
 	{
 		this.id=iD;
 		this.cpf=cpF;

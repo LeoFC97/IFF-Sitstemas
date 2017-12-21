@@ -62,10 +62,10 @@ public class Janela_Listar extends JPanel
 		en_id.setLocation(400,70);
 		this.add(en_id);
 	}
-		class OuvinteListarPessoa implements MouseListener
+		public class OuvinteListarPessoa implements MouseListener
 		{
-			String cpf,id,tipo;
-			int i,k,j;
+			String cpf,id;
+			int i,j;
 			BD aux;
 			Object[] v;
 			Object[] p;
@@ -81,27 +81,14 @@ public class Janela_Listar extends JPanel
 				v=aux.obterLista("PessoaEvento");
 				p = aux.obterLista("Pessoa");
 				ta_informacoes.setText("");
-				k=0;
 				for(i=0;i<aux.getCont3();i++)
 				{
 					PessoaEvento varPessoaEvento = (PessoaEvento)v[i];
 					if(id.equals(varPessoaEvento.getID())) 
 					{
-						k++;
-						for(j=0;j<aux.getCont1();j++)
-						{
-							Pessoa varPessoa = (Pessoa)p[j];
-							if(varPessoaEvento.getCPF().equals(varPessoa.getCPF())) 
-							{
-								ta_informacoes.append(varPessoa.getNome() + "   -   " + varPessoaEvento.getCPF() + "\n");  
-							}
-						}
+						ta_informacoes.append(varPessoaEvento.getCPF() + "   -   " + varPessoaEvento.getID() + "\n");  
 					}
 				}
-				if(k == 0)
-				{
-					ta_informacoes.setText("Este Evento não possui inscritos.");
-				}		
 			}
 			@Override
 			public void mouseEntered(MouseEvent arg0)
