@@ -1,0 +1,4 @@
+ VetorA: 0.011
+ vetorB: 0.014
+ vetorC: 0.019
+ vetorD: 0.028
