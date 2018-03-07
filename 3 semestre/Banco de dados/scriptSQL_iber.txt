@@ -1,0 +1,113 @@
+drop database db_iber;
+create database db_iber;
+use db_iber;
+
+
+
+CREATE TABLE Carro (
+  Placa CHAR(8) NOT NULL,
+  Cor CHAR(10) NULL,
+  Modelo CHAR(10) NULL,
+  Ano CHAR(4) NULL,
+  PRIMARY KEY(Placa)
+);
+
+CREATE TABLE Corrida (
+  Passageiro_CPF CHAR(40) NOT NULL,
+  Dia Date NOT NULL,
+  Hora CHAR(10) NULL,
+  Destino CHAR(200) NULL,
+  Origem CHAR(20) NOT NULL,
+  Tipo_de_pagamento CHAR,
+  Duração FLOAT NULL,
+  Valor FLOAT NULL,
+  Distância FLOAT NULL,
+  Pontuação FLOAT NULL,
+  PRIMARY KEY(Passageiro_CPF),
+  INDEX Corrida_FKIndex1(Passageiro_CPF)
+);
+
+CREATE TABLE Empresa (
+  CNPJ CHAR(10) NOT NULL,
+  Escritório_CNPJ CHAR(20) NOT NULL,
+  Escritório_Oficina_ID INTEGER(10) UNSIGNED NOT NULL,
+  Escritório_Oficina_Mecânico_cpf CHAR(10) NOT NULL,
+  Razão_social CHAR(40) NULL,
+  PRIMARY KEY(CNPJ, Escritório_CNPJ, Escritório_Oficina_ID, Escritório_Oficina_Mecânico_cpf),
+  INDEX Empresa_FKIndex1(Escritório_CNPJ, Escritório_Oficina_ID, Escritório_Oficina_Mecânico_cpf)
+);
+
+CREATE TABLE Escritório (
+  CNPJ CHAR(20) NOT NULL,
+  Oficina_ID INTEGER(10) UNSIGNED NOT NULL,
+  Oficina_Mecânico_cpf CHAR(10) NOT NULL,
+  Gerente CHAR(40) NULL,
+  UF CHAR(2) NULL,
+  Cidade CHAR(10) NULL,
+  PRIMARY KEY(CNPJ, Oficina_ID, Oficina_Mecânico_cpf),
+  INDEX Escritório_FKIndex1(Oficina_ID, Oficina_Mecânico_cpf)
+);
+
+CREATE TABLE Mecânico (
+  cpf CHAR(10) NOT NULL,
+  rg CHAR(10),
+  nome CHAR(100),
+  cidade CHAR(40),
+  PRIMARY KEY(cpf)
+);
+
+CREATE TABLE Motorista (
+  CNH CHAR(10) NOT NULL,
+  Corrida_Passageiro_CPF CHAR(40) NOT NULL,
+  Empresa_CNPJ CHAR(10) NOT NULL,
+  Empresa_Escritório_CNPJ CHAR(20) NOT NULL,
+  Carro_Placa CHAR(7) NOT NULL,
+  Empresa_Escritório_Oficina_ID INTEGER(10) UNSIGNED NOT NULL,
+  Empresa_Escritório_Oficina_Mecânico_cpf CHAR(10) NOT NULL,
+  Nome CHAR(20) NULL,
+  PRIMARY KEY(CNH, Corrida_Passageiro_CPF, Empresa_CNPJ, Empresa_Escritório_CNPJ, Carro_Placa, Empresa_Escritório_Oficina_ID, Empresa_Escritório_Oficina_Mecânico_cpf),
+  INDEX Motorista_FKIndex1(Corrida_Passageiro_CPF),
+  INDEX Motorista_FKIndex2(Empresa_CNPJ, Empresa_Escritório_CNPJ, Empresa_Escritório_Oficina_ID, Empresa_Escritório_Oficina_Mecânico_cpf),
+  INDEX Motorista_FKIndex3(Carro_Placa)
+);
+
+CREATE TABLE Oficina (
+  ID INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  Mecânico_cpf CHAR(10) NOT NULL,
+  UF VARCHAR(2) NULL,
+  PRIMARY KEY(ID, Mecânico_cpf),
+  INDEX Oficina_FKIndex1(Mecânico_cpf)
+);
+
+CREATE TABLE Passageiro (
+  CPF CHAR(40) NOT NULL,
+  Nome CHAR(100),
+  PRIMARY KEY(CPF)
+);
+
+-- inserindo os dados na tabela carro
+insert into Carro values ("AAA 0001","PRETO","UNO",2014);
+insert into Carro values ("AAA 0002","VERDE","GOL",2012);
+insert into Carro values ("AAA 0003","PRATA","PALIO",2010);
+insert into Carro values ("AAA 0004","BRANCO","SIENA",2015);
+insert into Carro values ("AAA 0005","PRETO","GOL",2017);
+insert into Carro values ("AAA 0006","BRANCO","SIENA",2010);
+insert into Carro values ("AAA 0007","VERDE","GOL",2017);
+insert into Carro values ("AAA 0008","AZUL","UNO",2001);
+insert into Carro values ("AAA 0009","VERMELHO","GOL",2013);
+insert into Carro values ("AAA 0010","PRATA","PALIO",2012);
+
+ -- inserindo os dados na tabela passageiro
+insert into Passageiro values ("74834395804","Leonardo");
+insert into Passageiro values ("78798580833","Pedro");
+insert into Passageiro values ("83130695702","Lucas");
+insert into Passageiro values ("33687448878","Afonso");
+insert into Passageiro values ("65234743306","Rafael");
+insert into Passageiro values ("82470312990","Yasmin");
+insert into Passageiro values ("00447761285","Taís");
+insert into Passageiro values ("52139247515","Maycon");
+insert into Passageiro values ("17949643048","Diego");
+insert into Passageiro values ("38681406205","Larissa");
+
+-- inserindo os dados na tabela corrida
+insert into Corrida values ("2017-11-11","18:25","Avenida Pelinca, 245","UENF","1",9.24,7.45,2.1,5.0);
