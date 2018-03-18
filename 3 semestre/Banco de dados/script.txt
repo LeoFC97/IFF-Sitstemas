@@ -1,0 +1,192 @@
+drop database db_iber;
+create database db_iber;
+use db_iber;
+show engine innodb status;
+
+
+
+create table carro(
+placa varchar(7) not null unique,
+cor varchar(10),
+ano varchar(4),
+modelo varchar(10),
+primary key(placa)
+);
+
+insert into carro values('KUG0577', 'azul', '2006', 'UNO');
+insert into carro values('JYG2238', 'preto', '2006', 'FOCUS');
+insert into carro values('BGD0916', 'prata', '2010', 'CELTA');
+insert into carro values('ASE4104', 'azul', '2011', 'PALIO');
+insert into carro values('RDF1502', 'branco', '2000', 'CELTA');
+insert into carro values('EAF0226', 'azul', '2008', 'UNO');
+insert into carro values('KYK8849', 'preto', '2009', 'UNO');
+insert into carro values('TRT1615', 'azul', '2010', 'CELTA');
+insert into carro values('GFR9327', 'prata', '2011', 'FOCUS');
+insert into carro values('ADE3413', 'vermelho', '2012', 'PALIO');
+
+create table mecanico(
+cpf varchar(11) not null,
+nome varchar(200),
+cidade varchar(100),
+primary key(cpf)
+);
+
+insert into mecanico values('58113778553', 'Alvaro', 'Niteroi');
+insert into mecanico values('62271202994', 'Ana', 'Rio de Janeiro');
+insert into mecanico values('44860046181', 'Caio', 'Campos dos Goytacazes');
+insert into mecanico values('68466566107', 'Douglas', 'Macaé');
+insert into mecanico values('50409371016', 'Pedro', 'Buzios');
+insert into mecanico values('52803989902', 'Mathias', 'Itaperuna');
+insert into mecanico values('49076749786', 'Lucas', 'São Gonçalo');
+insert into mecanico values('52263317170', 'Inácio', 'Niteroi');
+insert into mecanico values('51109442666', 'Vicente', 'Campos dos Goytacazes');
+insert into mecanico values('84601310707', 'Catarina', 'Campos dos Goytacazes');
+
+create table oficina(
+ID varchar(11) not null unique,
+mecanico_cpf varchar(11) not null,
+UF varchar(2) not null,
+primary key(ID, mecanico_cpf),
+foreign key(mecanico_cpf) references mecanico(cpf)
+);
+
+insert into oficina values('42033888293', '58113778553', 'RJ');
+insert into oficina values('41873882786', '62271202994', 'RJ');
+insert into oficina values('22259780231', '44860046181', 'RJ');
+insert into oficina values('63497297274', '68466566107', 'RJ');
+insert into oficina values('47511954705', '50409371016', 'RJ');
+insert into oficina values('27697327170', '52803989902', 'RJ');
+insert into oficina values('54759581915', '49076749786', 'RJ');
+insert into oficina values('88165998315', '52263317170', 'RJ');
+insert into oficina values('54843504794', '51109442666', 'RJ');
+insert into oficina values('49067691418', '84601310707', 'RJ');
+
+create table escritorio(
+CNPJ varchar(14) not null unique,
+id_oficina varchar(11) not null,
+mecanico_cpf varchar(11) not null,
+primary key(CNPJ, mecanico_cpf),
+foreign key(id_oficina) references oficina(ID),
+foreign key(mecanico_cpf) references mecanico(cpf)
+);
+
+insert into escritorio values('83562984263', '42033888293', '58113778553');
+insert into escritorio values('18790170375', '41873882786', '62271202994');
+insert into escritorio values('70083543796', '22259780231', '44860046181');
+insert into escritorio values('15779400345', '63497297274', '68466566107');
+insert into escritorio values('88720285133', '47511954705', '50409371016');
+insert into escritorio values('53644815042', '27697327170', '52803989902');
+insert into escritorio values('62698862240', '54759581915', '49076749786');
+insert into escritorio values('71427329278', '88165998315', '52263317170');
+insert into escritorio values('68135830363', '54843504794', '51109442666');
+insert into escritorio values('12759657136', '49067691418', '84601310707');
+
+create table empresa(
+CNPJ_EMPRESA varchar(14) not null unique,
+escritorio_cnpj varchar(11) not null,
+oficina_id varchar(11) not null,
+mecanico_cpf varchar(11) not null,
+RazaoSocial varchar(200),
+primary key(CNPJ_EMPRESA, oficina_id,mecanico_cpf),
+foreign key(escritorio_cnpj) references escritorio(CNPJ),
+foreign key(oficina_id) references oficina(id),
+foreign key (mecanico_cpf) references mecanico(cpf)
+);
+
+insert into empresa values('28877937979', '83562984263', '42033888293', '58113778553', 'filial 1');
+insert into empresa values('51386567026', '18790170375', '41873882786', '62271202994', 'filial 2');
+insert into empresa values('61835450495', '70083543796', '22259780231', '44860046181', 'filial 3');
+insert into empresa values('20156259483', '15779400345', '63497297274', '68466566107', 'filial 4');
+insert into empresa values('68473600603', '88720285133', '47511954705', '50409371016', 'filial 5');
+insert into empresa values('12224215652', '53644815042', '27697327170', '52803989902', 'filial 6');
+insert into empresa values('84274587766', '62698862240', '54759581915', '49076749786', 'filial 7');
+insert into empresa values('66740225674', '71427329278', '88165998315', '52263317170', 'filial 8');
+insert into empresa values('84213219525', '68135830363', '54843504794', '51109442666', 'filial 9');
+insert into empresa values('30870658388', '12759657136', '49067691418', '84601310707', 'filial 10');
+
+create table passgeiro(
+CPF varchar(11) not null unique,
+nome varchar(200) not null,
+primary key(CPF)
+);
+
+insert into passgeiro values('29735576271', 'Pedro');
+insert into passgeiro values('60023064373', 'Lucas');
+insert into passgeiro values('26228458089', 'Afonso');
+insert into passgeiro values('65002068368', 'Tais');
+insert into passgeiro values('53867579379', 'Leonardo');
+insert into passgeiro values('78540607999', 'Emanuel');
+insert into passgeiro values('74472873894', 'Anna');
+insert into passgeiro values('72009840527', 'Amanda');
+insert into passgeiro values('90189041494', 'Patrick');
+insert into passgeiro values('60568233081', 'Marcela');
+
+create table Corrida(
+Passageiro_CPF varchar(11) not null unique,
+data varchar(20),
+destino varchar(100),
+origem varchar(100),
+tipo_de_pagamento varchar(100) not null,
+pontuacao float,
+valor int not null,
+primary key(Passageiro_CPF)
+);
+
+insert into Corrida values('29735576271', '12/03/2018', 'Macaé', 'Itaperuna', 'dinheiro', 5, 20);
+insert into Corrida values('60023064373', '13/03/2018', 'Vitória', 'Vitória', 'débito', 3, 7);
+insert into Corrida values('26228458089', '14/03/2018', 'São Gonçalo', 'São Gonçalo', 'crédito', 10, 10);
+insert into Corrida values('65002068368', '15/03/2018', 'Pádua', 'Pádua', 'cartão pré-pago', 3, 6);
+insert into Corrida values('53867579379', '16/03/2018', 'Travessão', 'Campos dos goytacazes', 'dinheiro', 2, 45);
+insert into Corrida values('78540607999', '17/03/2018', 'Niterói', 'Rio de Janeiro', 'dinheiro', 4, 12);
+insert into Corrida values('74472873894', '18/03/2018', 'Rio de Janeiro', 'Niterói', 'débito', 10, 12);
+insert into Corrida values('72009840527', '19/03/2018', 'São Gonçalo', 'São Gonçalo', 'cartão pré-pago', 8, 8);
+insert into Corrida values('90189041494', '20/03/2018', 'São Pedro da aldeia', 'São Pedro da aldeia', 'crédito', 9, 9);
+insert into Corrida values('60568233081', '21/03/2018', 'Campos dos Goytacazes', 'Campos dos goytacazes', 'débito', 7, 15);
+
+create table motorista(
+CNH varchar(14) not null unique,
+passageiro_cpf varchar(11) not null,
+empresa_cnpj varchar(14) not null unique,
+escritorio_cnpj varchar(14) not null unique,
+carro_placa varchar(7) not null unique,
+oficina_id varchar(11) not null unique ,
+mecanico_cpf varchar(14) not null,
+nome varchar(240),
+primary key(CNH, passageiro_cpf, empresa_cnpj, escritorio_cnpj, carro_placa, oficina_id, mecanico_cpf),
+foreign key(passageiro_cpf) references passageiro(cpf),
+foreign key(empresa_cnpj) references empresa(cnpj),
+foreign key(escritorio_cnpj) references escritorio(cnpj),
+foreign key(carro_placa) references carro(placa),
+foreign key(oficina_id) references oficina(ID),
+foreign key(mecanico_cpf) references mecanico(cpf)
+);
+
+create table motorista(
+CNH varchar(14) not null unique,
+passageiro_cpf varchar(11) not null,
+empresa_cnpj varchar(14) not null unique,
+escritorio_cnpj varchar(14) not null unique,
+carro_placa varchar(7) not null unique,
+oficina_id varchar(11) not null unique ,
+mecanico_cpf varchar(14) not null,
+nome varchar(240),
+primary key(CNH, passageiro_cpf, empresa_cnpj, escritorio_cnpj, carro_placa, oficina_id, mecanico_cpf),
+foreign key(passageiro_cpf) references passageiro(cpf),
+foreign key(empresa_cnpj) references empresa(cnpj),
+foreign key(escritorio_cnpj) references escritorio(cnpj),
+foreign key(carro_placa) references carro(placa),
+foreign key(oficina_id) references oficina(ID),
+foreign key(mecanico_cpf) references mecanico(cpf)
+);
+
+
+insert into motorista values('33522526525', '29735576271', '28877937979', '83562984263', '66205778768', '42033888293', '58113778553', 'Helder');
+insert into motorista values('20563171830', '60023064373', '51386567026', '18790170375', '33622389886', '41873882786', '62271202994', 'Rosemary');
+insert into motorista values('70429768853', '26228458089', '61835450495', '70083543796', '68809165989', '22259780231', '44860046181', 'Leandro');
+insert into motorista values('92680422327', '65002068368', '20156259483', '15779400345', '78741047217', '63497297274', '68466566107', 'Fábio');
+insert into motorista values('21517521036', '53867579379', '68473600603', '88720285133', '33415025041', '47511954705', '50409371016', 'Tales');
+insert into motorista values('40207922239', '78540607999', '12224215652', '53644815042', '34902269045', '27697327170', '52803989902', 'Elisabete');
+insert into motorista values('97272915942', '74472873894', '84274587766', '62698862240', '43588493485', '54759581915', '49076749786', 'Roberto');
+insert into motorista values('64350929782', '72009840527', '66740225674', '71427329278', '36616150154', '88165998315', '52263317170', 'Paulo');
+insert into motorista values('79799621622', '90189041494', '84213219525', '68135830363', '45293279420', '54843504794', '51109442666', 'Paula');
+insert into motorista values('93530777018', '60568233081', '30870658388', '12759657136', '40234137418', '49067691418', '84601310707', 'Juliano');
